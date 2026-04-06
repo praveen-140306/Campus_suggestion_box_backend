@@ -38,6 +38,11 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Root route to prevent "Cannot GET /" on Vercel deployment
+app.get('/', (req, res) => {
+  res.send('Campus Suggestion Box Backend API is running.');
+});
+
 // ✅ BETTER Mongo connection (important for Vercel)
 let cachedDb = null;
 
