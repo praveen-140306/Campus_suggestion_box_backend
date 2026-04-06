@@ -43,15 +43,16 @@ if (process.env.CLOUDINARY_CLOUD_NAME) {
     console.log('Using Cloudinary for uploads');
 } else {
     // FALLBACK TO LOCAL STORAGE
+    const fallbackDir = process.env.VERCEL ? '/tmp' : 'uploads/';
     storage = multer.diskStorage({
         destination(req, file, cb) {
-            cb(null, 'uploads/');
+            cb(null, fallbackDir);
         },
         filename(req, file, cb) {
             cb(null, `${Date.now()}-${file.originalname}`);
         }
     });
-    console.log('Using local disk for uploads');
+    console.log(`Using local disk for uploads (${fallbackDir})`);
 }
 
 const upload = multer({
